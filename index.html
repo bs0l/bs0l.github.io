@@ -5,6 +5,19 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
     }
     
     label {
@@ -13,26 +26,55 @@
     
     input[type="text"], input[type="time"] {
       margin-bottom: 10px;
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
     
     #notification-message {
       margin-top: 20px;
       display: none;
+      text-align: center;
+      font-weight: bold;
+    }
+    
+    @media (max-width: 600px) {
+      input[type="text"], input[type="time"], button {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Rain Notification</h1>
-  
-  <label for="location">Location:</label>
-  <input type="text" id="location" placeholder="Enter your location">
-  
-  <label for="notification-time">Notification Time:</label>
-  <input type="time" id="notification-time" value="21:30">
-  
-  <button onclick="scheduleNotification()">Schedule Notification</button>
-  
-  <div id="notification-message"></div>
+  <div class="container">
+    <h1>Rain Notification</h1>
+    
+    <label for="location">Location:</label>
+    <input type="text" id="location" placeholder="Enter your location">
+    
+    <label for="notification-time">Notification Time:</label>
+    <input type="time" id="notification-time" value="21:30">
+    
+    <button onclick="scheduleNotification()">Schedule Notification</button>
+    
+    <div id="notification-message"></div>
+  </div>
   
   <script>
     function scheduleNotification() {
