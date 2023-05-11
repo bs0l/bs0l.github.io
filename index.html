@@ -67,9 +67,9 @@
           const weather = data.weather[0].main;
           
           if (weather.toLowerCase().includes('rain')) {
-            showNotificationMessage(`It's going to rain in ${location} overnight!`);
+            showBrowserNotification(`It's going to rain in ${location} overnight!`);
           } else {
-            showNotificationMessage(`No rain expected in ${location} overnight.`);
+            showBrowserNotification(`No rain expected in ${location} overnight.`);
           }
         })
         .catch(error => {
@@ -78,11 +78,38 @@
         });
     }
     
+    function showBrowserNotification(message) {
+      if ('Notification' in window && Notification.permission === 'granted') {
+        const options = {
+          body: message,
+          icon: 'notification-icon.png' // Replace with the path to your notification icon
+        };
+        
+        new Notification('Rain Notification', options);
+      }
+    }
+    
     function showNotificationMessage(message) {
       const notificationMessage = document.getElementById('notification-message');
       notificationMessage.textContent = message;
       notificationMessage.style.display = 'block';
     }
+    
+    // Request permission for browser notifications
+    document.addEventListener('DOMContentLoaded', function() {
+      if ('Notification' in window) {
+        if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+          Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+              // User granted permission
+            } else {
+              // User denied permission or default behavior
+            }
+          });
+        }
+      }
+    });
   </script>
 </body>
+
 </html>
