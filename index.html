@@ -1,7 +1,88 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <title>Rain Notification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    label {
+      font-weight: bold;
+    }
+    
+    input[type="text"], input[type="time"] {
+      margin-bottom: 10px;
+    }
+    
+    #notification-message {
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
 <body>
-<h1>Hello World - bs0l</h1>
-<p>I'm hosted with GitHub Pages. </p>
-<body>
+  <h1>Rain Notification</h1>
+  
+  <label for="location">Location:</label>
+  <input type="text" id="location" placeholder="Enter your location">
+  
+  <label for="notification-time">Notification Time:</label>
+  <input type="time" id="notification-time" value="21:30">
+  
+  <button onclick="scheduleNotification()">Schedule Notification</button>
+  
+  <div id="notification-message"></div>
+  
+  <script>
+    function scheduleNotification() {
+      const location = document.getElementById('location').value;
+      const notificationTime = document.getElementById('notification-time').value;
+      
+      const now = new Date();
+      const targetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), notificationTime.split(':')[0], notificationTime.split(':')[1]);
+      
+      if (now > targetTime) {
+        targetTime.setDate(targetTime.getDate() + 1); // If the target time has already passed today, schedule it for tomorrow
+      }
+      
+      const timeToWait = targetTime - now;
+      
+      setTimeout(() => {
+        checkWeather(location);
+      }, timeToWait);
+      
+      const formattedTime = targetTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      showNotificationMessage(`Notification scheduled for ${formattedTime}`);
+    }
+    
+    function checkWeather(location) {
+      const apiKey = '70288fb29cb22a94de690a0584f6772f'; // Replace with your OpenWeatherMap API key
+      
+      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(location)}&appid=${apiKey}`;
+      
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          const weather = data.weather[0].main;
+          
+          if (weather.toLowerCase().includes('rain')) {
+            showNotificationMessage(`It's going to rain in ${location} overnight!`);
+          } else {
+            showNotificationMessage(`No rain expected in ${location} overnight.`);
+          }
+        })
+        .catch(error => {
+          showNotificationMessage('An error occurred while checking the weather. Please try again later.');
+          console.error(error);
+        });
+    }
+    
+    function showNotificationMessage(message) {
+      const notificationMessage = document.getElementById('notification-message');
+      notificationMessage.textContent = message;
+      notificationMessage.style.display = 'block';
+    }
+  </script>
+</body>
 </html>
