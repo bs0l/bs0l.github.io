@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Transactions</title>
+</head>
+<body>
+    <h1>Split Transactions</h1>
+    <form id="splitForm">
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Description</th>
+                    <th>Amount ($)</th>
+                    <th colspan="3">People</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th><input type="text" id="person1" placeholder="Person 1"></th>
+                    <th><input type="text" id="person2" placeholder="Person 2"></th>
+                    <th><input type="text" id="person3" placeholder="Person 3"></th>
+                </tr>
+            </thead>
+            <tbody id="items">
+                <tr class="item-row">
+                    <td><input type="text" class="description" placeholder="Item Description"></td>
+                    <td><input class="amount" type="text" step="0.01" placeholder="Amount ($)"></td>
+                    <td><input type="checkbox" class="person-checkbox" id="person1-checkbox"></td>
+                    <td><input type="checkbox" class="person-checkbox" id="person2-checkbox"></td>
+                    <td><input type="checkbox" class="person-checkbox" id="person3-checkbox"></td>
+                </tr>
+                <!-- Additional rows will be added here dynamically -->
+            </tbody>
+            <tr>
+                <td><input type="text" id="taxDescription" placeholder="Tax"></td>
+                <td><input type="text" id="taxAmount" placeholder="Amount ($ or %)"></td>
+                <td colspan="3"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="tipDescription" placeholder="Tip"></td>
+                <td><input type="text" id="tipAmount" placeholder="Amount ($ or %)"></td>
+                <td colspan="3"></td>
+            </tr>
+        </table>
+        
+        <button type="button" id="addItemRow">Add Item</button>
+        <button type="button" onclick="calculateSplit()">Calculate Split</button>
+    </form>
+
+    <div id="results"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
